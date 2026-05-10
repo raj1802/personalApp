@@ -6,21 +6,21 @@ import { Save, Trash2, ArrowLeft, Bold, Italic, Link, Code, List, Quote, Smile, 
 import Markdown from 'react-native-markdown-display';
 
 export const NoteEditorScreen = ({ route, navigation }: any) => {
-  const { filename } = route.params || {};
+  const { filename, uri } = route.params || {};
   
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   useEffect(() => {
-    if (filename) {
-      loadNote(filename);
+    if (uri) {
+      loadNote(uri);
     }
-  }, [filename]);
+  }, [uri]);
 
-  const loadNote = async (name: string) => {
-    const fileContent = await readNote(name);
+  const loadNote = async (noteUri: string) => {
+    const fileContent = await readNote(noteUri);
     setContent(fileContent);
-    setTitle(name.replace('.md', ''));
+    if (filename) setTitle(filename.replace('.md', ''));
   };
 
   const handleSave = async () => {
@@ -28,16 +28,16 @@ export const NoteEditorScreen = ({ route, navigation }: any) => {
       Alert.alert('Error', 'Please enter a title');
       return;
     }
-    await saveNote(title, content);
+    await saveNote(title, content, uri);
     navigation.goBack();
   };
 
   const handleDelete = async () => {
-    if (filename) {
+    if (uri) {
       Alert.alert('Delete Note', 'Are you sure?', [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Delete', style: 'destructive', onPress: async () => {
-          await deleteNote(filename);
+          await deleteNote(uri);
           navigation.goBack();
         }}
       ]);
@@ -68,7 +68,7 @@ export const NoteEditorScreen = ({ route, navigation }: any) => {
           placeholderTextColor={theme.colors.textSecondary}
           value={title}
           onChangeText={setTitle}
-          editable={!filename} // Lock title if existing note
+          editable={!uri} // Lock title if existing note
         />
         <TouchableOpacity onPress={() => setIsPreview(!isPreview)} style={styles.iconButton}>
           {isPreview ? <Edit2 size={24} color={theme.colors.textPrimary} /> : <Eye size={24} color={theme.colors.textPrimary} />}
@@ -125,7 +125,7 @@ export const NoteEditorScreen = ({ route, navigation }: any) => {
           )}
 
           <View style={styles.actionButtons}>
-            {filename && (
+            {uri && (
               <TouchableOpacity onPress={handleDelete} style={[styles.toolbarButton, { marginRight: theme.spacing.sm, borderColor: theme.colors.danger }]}>
                 <Trash2 size={20} color={theme.colors.danger} />
               </TouchableOpacity>

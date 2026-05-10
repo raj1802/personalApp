@@ -1,6 +1,8 @@
 import * as FileSystem from 'expo-file-system/legacy';
+import { getHabitsDirUri } from './vaultSystem';
+import { Platform } from 'react-native';
 
-const HABITS_FILE = `${FileSystem.documentDirectory}habits_data.json`;
+const HABITS_FILENAME = 'habits_data.json';
 
 export interface HabitEntry {
   date: string; // YYYY-MM-DD
@@ -13,15 +15,29 @@ export interface Habit {
   entries: Record<string, number>; // date -> count
 }
 
+const getHabitsFileUri = async () => {
+  const habitsDirUri = await getHabitsDirUri();
+  
+  if (Platform.OS === 'android') {
+    const files = await FileSystem.StorageAccessFramework.readDirectoryAsync(habitsDirUri);
+    const existing = files.find(u => decodeURIComponent(u).endsWith(HABITS_FILENAME) || decodeURIComponent(u).endsWith(`:${HABITS_FILENAME}`));
+    if (existing) return existing;
+    
+    return await FileSystem.StorageAccessFramework.createFileAsync(habitsDirUri, HABITS_FILENAME, 'application/json');
+  } else {
+    return `${habitsDirUri}${HABITS_FILENAME}`;
+  }
+};
+
 export const loadHabits = async (): Promise<Habit[]> => {
   try {
-    const fileInfo = await FileSystem.getInfoAsync(HABITS_FILE);
+    const uri = await getHabitsFileUri();
+    const fileInfo = await FileSystem.getInfoAsync(uri);
     if (!fileInfo.exists) {
-      // Default empty habits
       return [];
     }
-    const content = await FileSystem.readAsStringAsync(HABITS_FILE);
-    return JSON.parse(content);
+    const content = await FileSystem.readAsStringAsync(uri, { encoding: 'utf8' });
+    return content ? JSON.parse(content) : [];
   } catch (error) {
     console.error("Failed to load habits", error);
     return [];
@@ -29,7 +45,8 @@ export const loadHabits = async (): Promise<Habit[]> => {
 };
 
 export const saveHabits = async (habits: Habit[]) => {
-  await FileSystem.writeAsStringAsync(HABITS_FILE, JSON.stringify(habits), {
+  const uri = await getHabitsFileUri();
+  await FileSystem.writeAsStringAsync(uri, JSON.stringify(habits), {
     encoding: 'utf8'
   });
 };
@@ -52,7 +69,7 @@ export const toggleHabit = async (habitId: string, date: string) => {
   
   if (habitIndex > -1) {
     const currentCount = habits[habitIndex].entries[date] || 0;
-    // Toggle between 0 and 1 (or we can increment for more github-like)
+    // Toggle between 0 and 1
     habits[habitIndex].entries[date] = currentCount > 0 ? 0 : 1;
     await saveHabits(habits);
   }

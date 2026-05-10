@@ -53,7 +53,7 @@ export const DashboardScreen = ({ navigation }: any) => {
   const renderItem = ({ item }: { item: NoteMetadata }) => (
     <TouchableOpacity 
       style={styles.card}
-      onPress={() => navigation.navigate('NoteEditor', { filename: item.filename })}
+      onPress={() => navigation.navigate('NoteEditor', { uri: item.uri, filename: item.filename })}
     >
       <View style={styles.cardHeader}>
         <FileText size={20} color={theme.colors.primary} />
