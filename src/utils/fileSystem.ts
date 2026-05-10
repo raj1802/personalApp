@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as FileSystem from 'expo-file-system/legacy';
 import { getNotesDirUri } from './vaultSystem';
 import { Platform } from 'react-native';

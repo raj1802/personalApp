@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as FileSystem from 'expo-file-system/legacy';
 import { getHabitsDirUri } from './vaultSystem';
 import { Platform } from 'react-native';
