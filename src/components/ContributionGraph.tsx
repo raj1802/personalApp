@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
-import { theme } from '../theme';
+import { theme, mindfulTheme as mt } from '../theme';
 
 interface ContributionGraphProps {
   entries: Record<string, number>; // date "YYYY-MM-DD" -> count
@@ -46,12 +46,11 @@ export const ContributionGraph: React.FC<ContributionGraphProps> = ({ entries, d
   }
 
   const getColor = (count: number) => {
-    if (count === 0) return theme.colors.border;
-    // SaaS aesthetic green
-    if (count === 1) return '#9BE9A8';
-    if (count === 2) return '#40C463';
-    if (count === 3) return '#30A14E';
-    return '#216E39'; // max
+    if (count <= 0) return mt.colors.heatmap0;
+    if (count === 1) return mt.colors.heatmap1;
+    if (count === 2) return mt.colors.heatmap2;
+    if (count === 3) return mt.colors.heatmap3;
+    return mt.colors.heatmap4;
   };
 
   return (

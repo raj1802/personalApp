@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, SafeAreaView, TextInput, Alert } from 'react-native';
 import { Habit, loadHabits, createHabit, toggleHabit } from '../utils/habitSystem';
 import { ContributionGraph } from '../components/ContributionGraph';
-import { theme } from '../theme';
-import { Plus, Check, ArrowLeft } from 'lucide-react-native';
+import { theme, mindfulTheme as mt } from '../theme';
+import { Plus, Check } from 'lucide-react-native';
+import { BottomNav } from '../components/BottomNav';
 
 export const HabitsScreen = ({ navigation }: any) => {
   const [habits, setHabits] = useState<Habit[]>([]);
@@ -57,9 +58,6 @@ export const HabitsScreen = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <ArrowLeft size={24} color={theme.colors.textPrimary} />
-        </TouchableOpacity>
         <Text style={styles.headerTitle}>Habits</Text>
       </View>
 
@@ -97,20 +95,22 @@ export const HabitsScreen = ({ navigation }: any) => {
       >
         <Plus color="#FFFFFF" size={24} />
       </TouchableOpacity>
+
+      <BottomNav current="habits" />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: theme.colors.background },
+  container: { flex: 1, backgroundColor: mt.colors.background },
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    paddingHorizontal: theme.spacing.lg, paddingVertical: theme.spacing.md,
-    borderBottomWidth: 1, borderBottomColor: theme.colors.border,
-    backgroundColor: theme.colors.surface
+    paddingHorizontal: mt.spacing.lg, paddingVertical: mt.spacing.md,
+    borderBottomWidth: 2, borderBottomColor: mt.colors.border,
+    backgroundColor: mt.colors.surface
   },
-  backBtn: { padding: theme.spacing.xs },
-  headerTitle: { fontSize: theme.typography.sizes.xl, fontWeight: theme.typography.weights.bold, color: theme.colors.textPrimary },
+  backBtn: { padding: mt.spacing.xs },
+  headerTitle: { fontSize: 22, fontWeight: '800', color: mt.colors.textGreen },
   addSection: {
     flexDirection: 'row', padding: theme.spacing.md, backgroundColor: theme.colors.surface,
     borderBottomWidth: 1, borderBottomColor: theme.colors.border
@@ -125,36 +125,39 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.md, paddingHorizontal: theme.spacing.lg,
     marginLeft: theme.spacing.sm
   },
-  saveBtnText: { color: '#FFFFFF', fontWeight: theme.typography.weights.semibold },
-  listContent: { padding: theme.spacing.md },
+  saveBtnText: { color: '#FFFFFF', fontWeight: '600' },
+  listContent: { padding: mt.spacing.md, paddingBottom: 100 },
   card: {
-    backgroundColor: theme.colors.surface, padding: theme.spacing.md,
-    borderRadius: theme.borderRadius.lg, marginBottom: theme.spacing.md,
-    borderWidth: 1, borderColor: theme.colors.border
+    backgroundColor: mt.colors.surface, padding: mt.spacing.md,
+    borderRadius: mt.borderRadius.lg, marginBottom: mt.spacing.md,
+    borderWidth: 2, borderColor: mt.colors.border,
+    shadowColor: '#1A1A1A', shadowOffset: { width: 2, height: 3 }, shadowOpacity: 0.1, shadowRadius: 0, elevation: 3,
   },
-  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: theme.spacing.md },
-  habitTitle: { fontSize: theme.typography.sizes.md, fontWeight: theme.typography.weights.semibold, color: theme.colors.textPrimary },
+  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: mt.spacing.md },
+  habitTitle: { fontSize: 15, fontWeight: '700', color: mt.colors.textPrimary },
   toggleBtn: {
-    width: 32, height: 32, borderRadius: 16, borderWidth: 2, borderColor: theme.colors.border,
+    width: 32, height: 32, borderRadius: 16, borderWidth: 2, borderColor: mt.colors.border,
     alignItems: 'center', justifyContent: 'center'
   },
-  toggleBtnActive: { backgroundColor: theme.colors.success, borderColor: theme.colors.success },
+  toggleBtnActive: { backgroundColor: mt.colors.accentTeal, borderColor: mt.colors.border },
   emptyState: { alignItems: 'center', marginTop: 100 },
-  emptyStateText: { color: theme.colors.textSecondary, fontSize: theme.typography.sizes.md },
+  emptyStateText: { color: mt.colors.textSecondary, fontSize: 15 },
   fab: {
     position: 'absolute',
-    bottom: 30,
-    right: 30,
-    backgroundColor: theme.colors.primary,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    bottom: 90,
+    right: 24,
+    backgroundColor: mt.colors.accentGreen,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
+    borderWidth: 2,
+    borderColor: mt.colors.border,
+    shadowColor: '#1A1A1A',
+    shadowOffset: { width: 2, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 0,
     elevation: 5,
   }
 });
