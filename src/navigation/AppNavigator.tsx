@@ -7,6 +7,7 @@ import { NoteEditorScreen } from '../screens/NoteEditorScreen';
 import { HabitsScreen } from '../screens/HabitsScreen';
 import { VaultSetupScreen } from '../screens/VaultSetupScreen';
 import { ReoccuranceScreen } from '../screens/ReoccuranceScreen';
+import { SplashScreen } from '../screens/SplashScreen';
 import { getVaultUri } from '../utils/vaultSystem';
 import { View, ActivityIndicator } from 'react-native';
 import { theme } from '../theme';
@@ -15,6 +16,7 @@ const Stack = createNativeStackNavigator();
 
 export const AppNavigator = () => {
   const [initialRoute, setInitialRoute] = useState<string | null>(null);
+  const [splashDone, setSplashDone] = useState(false);
 
   useEffect(() => {
     const checkVault = async () => {
@@ -24,12 +26,9 @@ export const AppNavigator = () => {
     checkVault();
   }, []);
 
-  if (!initialRoute) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.colors.background }}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-      </View>
-    );
+  // Show splash until both vault check AND splash animation are done
+  if (!initialRoute || !splashDone) {
+    return <SplashScreen onFinish={() => setSplashDone(true)} />;
   }
 
   return (

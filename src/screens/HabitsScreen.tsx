@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, SafeAreaView, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, SafeAreaView, TextInput, Alert, StatusBar, Platform } from 'react-native';
 import { Habit, loadHabits, createHabit, toggleHabit } from '../utils/habitSystem';
 import { ContributionGraph } from '../components/ContributionGraph';
 import { theme, mindfulTheme as mt } from '../theme';
@@ -105,7 +105,9 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: mt.colors.background },
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    paddingHorizontal: mt.spacing.lg, paddingVertical: mt.spacing.md,
+    paddingHorizontal: mt.spacing.lg,
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 32) + 8 : mt.spacing.md,
+    paddingBottom: mt.spacing.md,
     borderBottomWidth: 2, borderBottomColor: mt.colors.border,
     backgroundColor: mt.colors.surface
   },

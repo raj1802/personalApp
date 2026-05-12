@@ -278,7 +278,7 @@ const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: mt.colors.background },
 
   // Header
-  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: Platform.OS === 'android' ? 16 : 8, paddingBottom: 12 },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 32) + 8 : 8, paddingBottom: 12 },
   hamburger: { fontSize: 22, color: mt.colors.textPrimary },
   appTitle: { fontSize: 22, fontWeight: '800', color: mt.colors.accentGreen, letterSpacing: -0.5 },
   avatar: { width: 38, height: 38, borderRadius: 19, backgroundColor: mt.colors.accentTeal, borderWidth: 2, borderColor: mt.colors.border, alignItems: 'center', justifyContent: 'center' },
