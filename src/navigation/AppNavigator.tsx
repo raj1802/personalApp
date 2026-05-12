@@ -15,6 +15,8 @@ import { TransactionsScreen } from '../screens/budget/TransactionsScreen';
 import { BudgetsScreen } from '../screens/budget/BudgetsScreen';
 import { WalletsScreen } from '../screens/budget/WalletsScreen';
 import { DebtScreen } from '../screens/budget/DebtScreen';
+import { RecurringScreen } from '../screens/budget/RecurringScreen';
+import { CategoriesScreen } from '../screens/budget/CategoriesScreen';
 import { getVaultUri } from '../utils/vaultSystem';
 import { theme } from '../theme';
 
@@ -62,6 +64,8 @@ export const AppNavigator = () => {
         <Stack.Screen name="BudgetsScreen" component={BudgetsScreen} />
         <Stack.Screen name="WalletsScreen" component={WalletsScreen} />
         <Stack.Screen name="DebtScreen" component={DebtScreen} />
+        <Stack.Screen name="RecurringScreen" component={RecurringScreen} />
+        <Stack.Screen name="CategoriesScreen" component={CategoriesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
