@@ -8,8 +8,14 @@ import { HabitsScreen } from '../screens/HabitsScreen';
 import { VaultSetupScreen } from '../screens/VaultSetupScreen';
 import { ReoccuranceScreen } from '../screens/ReoccuranceScreen';
 import { SplashScreen } from '../screens/SplashScreen';
+import { BudgetHomeScreen } from '../screens/budget/BudgetHomeScreen';
+import { AddTransactionScreen } from '../screens/budget/AddTransactionScreen';
+import { AnalyticsScreen } from '../screens/budget/AnalyticsScreen';
+import { TransactionsScreen } from '../screens/budget/TransactionsScreen';
+import { BudgetsScreen } from '../screens/budget/BudgetsScreen';
+import { WalletsScreen } from '../screens/budget/WalletsScreen';
+import { DebtScreen } from '../screens/budget/DebtScreen';
 import { getVaultUri } from '../utils/vaultSystem';
-import { View, ActivityIndicator } from 'react-native';
 import { theme } from '../theme';
 
 const Stack = createNativeStackNavigator();
@@ -41,11 +47,21 @@ export const AppNavigator = () => {
           contentStyle: { backgroundColor: theme.colors.background }
         }}
       >
+        {/* Core */}
         <Stack.Screen name="VaultSetup" component={VaultSetupScreen} />
         <Stack.Screen name="Dashboard" component={DashboardScreen} />
         <Stack.Screen name="NoteEditor" component={NoteEditorScreen} />
         <Stack.Screen name="Habits" component={HabitsScreen} />
         <Stack.Screen name="Reoccurance" component={ReoccuranceScreen} />
+
+        {/* Budget */}
+        <Stack.Screen name="BudgetHome" component={BudgetHomeScreen} />
+        <Stack.Screen name="AddTransactionScreen" component={AddTransactionScreen} />
+        <Stack.Screen name="AnalyticsScreen" component={AnalyticsScreen} />
+        <Stack.Screen name="TransactionsScreen" component={TransactionsScreen} />
+        <Stack.Screen name="BudgetsScreen" component={BudgetsScreen} />
+        <Stack.Screen name="WalletsScreen" component={WalletsScreen} />
+        <Stack.Screen name="DebtScreen" component={DebtScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

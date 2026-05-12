@@ -4,24 +4,25 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { mindfulTheme as mt } from '../theme';
 
-type TabName = 'dashboard' | 'habits' | 'notes' | 'reoccurance';
+type TabName = 'dashboard' | 'habits' | 'notes' | 'reoccurance' | 'budget';
 
 interface BottomNavProps {
   current: TabName;
 }
 
 const TABS = [
-  { name: 'dashboard' as TabName, label: 'Dashboard', icon: '⊞' },
-  { name: 'habits'    as TabName, label: 'Habits',    icon: '✓' },
-  { name: 'notes'     as TabName, label: 'Notes',     icon: '📄' },
-  { name: 'reoccurance' as TabName, label: 'Recur',   icon: '🔄' },
+  { name: 'dashboard'   as TabName, label: 'Dashboard', icon: '⊞' },
+  { name: 'habits'      as TabName, label: 'Habits',    icon: '✓' },
+  { name: 'notes'       as TabName, label: 'Notes',     icon: '📄' },
+  { name: 'budget'      as TabName, label: 'Budget',    icon: '💰' },
 ];
 
 const SCREEN_MAP: Record<TabName, string> = {
-  dashboard: 'Dashboard',
-  habits: 'Habits',
-  notes: 'Dashboard',          // Notes tab navigates to Dashboard for now
+  dashboard:   'Dashboard',
+  habits:      'Habits',
+  notes:       'Dashboard',
   reoccurance: 'Reoccurance',
+  budget:      'BudgetHome',
 };
 
 export const BottomNav = ({ current }: BottomNavProps) => {
