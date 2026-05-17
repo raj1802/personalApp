@@ -5,7 +5,7 @@ import {
   SafeAreaView, StatusBar, Platform,
 } from 'react-native';
 import { getNotesList, NoteMetadata } from '../utils/fileSystem';
-import { Habit, loadHabits } from '../utils/habitSystem';
+import { Habit, loadHabits, getHeatmapData, getGlobalStreak } from '../utils/habitSystem';
 import { mindfulTheme as mt } from '../theme';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system/legacy';
@@ -16,29 +16,6 @@ import { BottomNav } from '../components/BottomNav';
 
 const today = new Date().toISOString().split('T')[0];
 
-function getStreakCount(habits: Habit[]): number {
-  if (!habits.length) return 0;
-  let streak = 0;
-  const d = new Date();
-  while (true) {
-    const dateStr = d.toISOString().split('T')[0];
-    const anyDone = habits.some(h => (h.entries[dateStr] || 0) > 0);
-    if (!anyDone) break;
-    streak++;
-    d.setDate(d.getDate() - 1);
-  }
-  return streak;
-}
-
-function getHeatmapData(habits: Habit[]): Record<string, number> {
-  const merged: Record<string, number> = {};
-  habits.forEach(h => {
-    Object.entries(h.entries).forEach(([date, count]) => {
-      merged[date] = (merged[date] || 0) + count;
-    });
-  });
-  return merged;
-}
 
 // ── Mini Heatmap (last 70 days, 10 cols × 7 rows) ─────────
 const HEATMAP_DAYS = 70;
@@ -139,7 +116,7 @@ export const DashboardScreen = ({ navigation }: any) => {
     return unsub;
   }, [navigation]);
 
-  const streak = getStreakCount(habits);
+  const streak = getGlobalStreak(habits);
   const heatmapData = getHeatmapData(habits);
   const recentNote = notes[0];
   const budgetPercent = 71; // placeholder — wire to real data later

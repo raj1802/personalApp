@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DashboardScreen } from '../screens/DashboardScreen';
 import { NoteEditorScreen } from '../screens/NoteEditorScreen';
 import { HabitsScreen } from '../screens/HabitsScreen';
+import { HabitDetailScreen } from '../screens/HabitDetailScreen';
 import { VaultSetupScreen } from '../screens/VaultSetupScreen';
 import { ReoccuranceScreen } from '../screens/ReoccuranceScreen';
 import { SplashScreen } from '../screens/SplashScreen';
@@ -54,6 +55,7 @@ export const AppNavigator = () => {
         <Stack.Screen name="Dashboard" component={DashboardScreen} />
         <Stack.Screen name="NoteEditor" component={NoteEditorScreen} />
         <Stack.Screen name="Habits" component={HabitsScreen} />
+        <Stack.Screen name="HabitDetail" component={HabitDetailScreen} />
         <Stack.Screen name="Reoccurance" component={ReoccuranceScreen} />
 
         {/* Budget */}
