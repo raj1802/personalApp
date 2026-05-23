@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { mindfulTheme as mt } from '../theme';
 
@@ -39,7 +39,14 @@ export const BottomNav = ({ current }: BottomNavProps) => {
             onPress={() => !isActive && navigation.navigate(SCREEN_MAP[tab.name])}
             activeOpacity={0.7}
           >
-            <Text style={[s.icon, isActive && s.activeIcon]}>{tab.icon}</Text>
+            {tab.name === 'notes' ? (
+              <Image 
+                source={require('../../assets/notes-icon.png')} 
+                style={[s.imageIcon, isActive && s.activeImageIcon]} 
+              />
+            ) : (
+              <Text style={[s.icon, isActive && s.activeIcon]}>{tab.icon}</Text>
+            )}
             <Text style={[s.label, isActive && s.activeLabel]}>{tab.label}</Text>
           </TouchableOpacity>
         );
@@ -88,5 +95,15 @@ const s = StyleSheet.create({
   activeLabel: {
     color: mt.colors.textPrimary,
     fontWeight: '700',
+  },
+  imageIcon: {
+    width: 22,
+    height: 22,
+    marginBottom: 2,
+    opacity: 0.7,
+    resizeMode: 'contain',
+  },
+  activeImageIcon: {
+    opacity: 1,
   },
 });
