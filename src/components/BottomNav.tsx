@@ -20,7 +20,7 @@ const TABS = [
 const SCREEN_MAP: Record<TabName, string> = {
   dashboard:   'Dashboard',
   habits:      'Habits',
-  notes:       'NoteEditor',
+  notes:       'NotesList',
   reoccurance: 'Reoccurance',
   budget:      'BudgetHome',
 };

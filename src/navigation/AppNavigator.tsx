@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DashboardScreen } from '../screens/DashboardScreen';
+import { NotesListScreen } from '../screens/NotesListScreen';
 import { NoteEditorScreen } from '../screens/NoteEditorScreen';
 import { HabitsScreen } from '../screens/HabitsScreen';
 import { HabitDetailScreen } from '../screens/HabitDetailScreen';
@@ -53,6 +54,7 @@ export const AppNavigator = () => {
         {/* Core */}
         <Stack.Screen name="VaultSetup" component={VaultSetupScreen} />
         <Stack.Screen name="Dashboard" component={DashboardScreen} />
+        <Stack.Screen name="NotesList" component={NotesListScreen} />
         <Stack.Screen name="NoteEditor" component={NoteEditorScreen} />
         <Stack.Screen name="Habits" component={HabitsScreen} />
         <Stack.Screen name="HabitDetail" component={HabitDetailScreen} />

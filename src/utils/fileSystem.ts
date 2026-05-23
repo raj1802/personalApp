@@ -8,6 +8,8 @@ export interface NoteMetadata {
   title: string;
   updatedAt: number;
   uri: string;
+  preview?: string;
+  tags?: string[];
 }
 
 export const getNotesList = async (): Promise<NoteMetadata[]> => {
@@ -25,16 +27,31 @@ export const getNotesList = async (): Promise<NoteMetadata[]> => {
   
   for (const uri of files) {
     const decodedUri = decodeURIComponent(uri);
-    // SAF URIs usually contain the filename at the very end
     const filename = decodedUri.split('/').pop()?.split(':').pop() || 'unknown.md';
     if (!filename.endsWith('.md')) continue;
 
     const fileInfo = await FileSystem.getInfoAsync(uri);
+    
+    // Read content to extract tags and preview
+    let content = '';
+    try {
+      content = await FileSystem.readAsStringAsync(uri, { encoding: 'utf8' });
+    } catch (e) {}
+
+    // Extract #tags (words starting with #, followed by letters/numbers)
+    const tagsMatches = content.match(/#[a-zA-Z0-9_]+/g) || [];
+    const tags = [...new Set(tagsMatches)]; // Unique tags
+    
+    // Clean preview (remove markdown formatting roughly, just take first 100 chars)
+    const preview = content.replace(/[#*`_>]/g, '').replace(/\n/g, ' ').substring(0, 100).trim();
+
     notesMetadata.push({
       filename: filename,
       title: filename.replace('.md', ''),
       updatedAt: fileInfo.exists ? (fileInfo.modificationTime || Date.now()) : Date.now(),
-      uri: uri
+      uri: uri,
+      preview: preview,
+      tags: tags
     });
   }
   
