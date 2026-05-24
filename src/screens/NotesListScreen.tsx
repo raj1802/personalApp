@@ -8,7 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getNotesList, NoteMetadata } from '../utils/fileSystem';
 import { mindfulTheme as mt } from '../theme';
 import { BottomNav } from '../components/BottomNav';
-import { Search, Grid, List as ListIcon, Plus, User } from 'lucide-react-native';
+// Removed lucide-react-native import to use stable text emojis instead
 
 export const NotesListScreen = ({ navigation }: any) => {
   const [notes, setNotes] = useState<NoteMetadata[]>([]);
@@ -62,7 +62,7 @@ export const NotesListScreen = ({ navigation }: any) => {
       {/* ── Google Keep Style Header ── */}
       <View style={s.header}>
         <View style={s.searchBar}>
-          <Search color={mt.colors.textSecondary} size={20} style={{ marginHorizontal: 12 }} />
+          <Text style={{ marginHorizontal: 12, fontSize: 18, color: mt.colors.textSecondary }}>🔍</Text>
           <TextInput
             style={s.searchInput}
             placeholder="Search your notes"
@@ -71,11 +71,11 @@ export const NotesListScreen = ({ navigation }: any) => {
             onChangeText={setSearchQuery}
           />
           <TouchableOpacity onPress={() => setIsGrid(!isGrid)} style={s.iconBtn}>
-            {isGrid ? <ListIcon color={mt.colors.textSecondary} size={22} /> : <Grid color={mt.colors.textSecondary} size={22} />}
+            {isGrid ? <Text style={{ fontSize: 20, color: mt.colors.textSecondary }}>☰</Text> : <Text style={{ fontSize: 20, color: mt.colors.textSecondary }}>⊞</Text>}
           </TouchableOpacity>
           <TouchableOpacity style={s.iconBtn}>
             <View style={s.avatar}>
-              <User color="#FFF" size={16} />
+              <Text style={{ fontSize: 14 }}>👤</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -104,7 +104,7 @@ export const NotesListScreen = ({ navigation }: any) => {
         onPress={() => navigation.navigate('NoteEditor', {})}
         activeOpacity={0.8}
       >
-        <Plus color="#FFF" size={32} />
+        <Text style={{ fontSize: 24, color: '#FFF' }}>➕</Text>
       </TouchableOpacity>
 
       <BottomNav current="notes" />

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { readNote, saveNote } from '../utils/fileSystem';
 import { mindfulTheme as mt } from '../theme';
-import { ArrowLeft, Pin, Bell, Archive, PlusSquare, Palette, Type, MoreVertical } from 'lucide-react-native';
+// Removed lucide-react-native import to use stable text emojis instead
 
 export const NoteEditorScreen = ({ route, navigation }: any) => {
   const initialUri = route.params?.uri;
@@ -57,18 +57,18 @@ export const NoteEditorScreen = ({ route, navigation }: any) => {
       {/* ── Header ── */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconButton}>
-          <ArrowLeft size={24} color="#5F6368" />
+          <Text style={{ fontSize: 24, color: '#5F6368' }}>⬅️</Text>
         </TouchableOpacity>
         
         <View style={styles.headerRight}>
           <TouchableOpacity style={styles.iconButton}>
-            <Pin size={22} color="#5F6368" />
+            <Text style={{ fontSize: 22, color: '#5F6368' }}>📌</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Bell size={22} color="#5F6368" />
+            <Text style={{ fontSize: 22, color: '#5F6368' }}>🔔</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Archive size={22} color="#5F6368" />
+            <Text style={{ fontSize: 22, color: '#5F6368' }}>📦</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -105,18 +105,18 @@ export const NoteEditorScreen = ({ route, navigation }: any) => {
         <View style={styles.bottomBar}>
           <View style={styles.bottomBarLeft}>
             <TouchableOpacity style={styles.bottomIcon}>
-              <PlusSquare size={20} color="#5F6368" />
+              <Text style={{ fontSize: 20, color: '#5F6368' }}>➕</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bottomIcon}>
-              <Palette size={20} color="#5F6368" />
+              <Text style={{ fontSize: 20, color: '#5F6368' }}>🎨</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bottomIcon}>
-              <Type size={20} color="#5F6368" />
+              <Text style={{ fontSize: 20, color: '#5F6368' }}>🔤</Text>
             </TouchableOpacity>
           </View>
           <Text style={styles.editedText}>Edited just now</Text>
           <TouchableOpacity style={styles.bottomIcon}>
-            <MoreVertical size={20} color="#5F6368" />
+            <Text style={{ fontSize: 20, color: '#5F6368', fontWeight: 'bold' }}>⋮</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
